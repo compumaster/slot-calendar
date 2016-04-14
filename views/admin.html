@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Top secret administrator page</h2>
+<div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#currentSelections" aria-controls="currentSelections" role="tab" data-toggle="tab">Current Picked Dates</a></li>
+        <li role="presentation"><a href="#slotstab" aria-controls="slotstab" role="tab" data-toggle="tab">Available Slots</a></li>
+        <li role="presentation"><a href="#authorizedEmails" aria-controls="authorizedEmails" role="tab" data-toggle="tab">Authorized Emails</a></li>
+        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="currentSelections">
+            <h3>Current picked dates</h3>
+            <p>Here you can delete the entries if needed.</p>
+            <form action="{{urlFor('index.admin.deletesubmit')}}" method="post" id="tableform">
+                <table class="table table-bordered table-condensed">
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th style="text-align: center">Delete</th>
+                    </tr>
+                    {% for row in table %}
+                    <tr {% if row.name != '' %}class="success"{% endif %}>
+                        <td>{{ row.date }}</td>
+                        <td>{{ row.name }}</td>
+                        <td>{{ row.email }}</td>
+                        <td style="text-align: center">
+                            <input class="cb" type="checkbox" name="date[{{ row.date }}]" value="true">
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                </table>
+                <button type="button" class="btn btn-default" onclick="$('.cb').hide()">Hide checkboxes for easier copy</button>
+                <button type="submit" class="btn btn-warning">Delete selected</button>
+            </form>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="authorizedEmails">
+            <h3>Authorized Emails</h3>
+            <form action="{{urlFor('index.admin.authorizedemails')}}" method="post" id="emailsform">
+                <div class="form-group">
+                    <label for="emailaddresses">Email address</label>
+                    <p>Enter email addresses, one line per email, no commas no spaces no anything else</p>
+                    <textarea class="form-control" id="emailaddresses" name="emails" rows="50" >{{ emails }}</textarea>
+                    <button type="submit" class="btn btn-primary">Update E-mails</button>
+                </div>
+            </form>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="slotstab">
+            <h3>Slots</h3>
+            <form action="{{urlFor('index.admin.slots')}}" method="post" id="slotsForm">
+                <div class="form-group">
+                    <label for="slots">Available Slots</label>
+                    <p>Enter slots in the following format, one per line.
+                        <ul>
+                            <li>The name of the slot must not contain the character ";".</li>
+                            <li>The name and the capacity is separated by the character ";".</li>
+                            <li>The &lt;Total capacity of the slot&gt; must be an positive integer value.</li>
+                        </ul>
+                    </p>
+
+                    <div class="well well-sm">&lt;Name of the slot&gt;<strong>;</strong>&lt;Total capacity of the slot&gt;</div>
+                    <p>Example:</p>
+                    <div class="well well-sm">
+                        Week 3 October 7<strong>;</strong>5<br/>
+                        Week 4 October 14<strong>;</strong>9<br/>
+                        Week 5 October 21<strong>;</strong>2
+                    </div>
+                    <textarea class="form-control" id="slots" name="slots" rows="20" >{{ slots }}</textarea>
+                    <button type="submit" class="btn btn-primary">Update Slots</button>
+                </div>
+            </form>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="settings">
+            <h3>Site Settings</h3>
+            <form class="form-horizontal" action="{{urlFor('index.admin.settings')}}" method="post" id="settingsForm">
+                <div class="form-group">
+                    <label for="siteTitle" class="col-sm-2 control-label">Site Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="siteTitle" name="siteTitle" placeholder="Site title" value="{{settings.siteTitle}}">
+                        <p class="help-block">This text is shown at every page at header.</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="formTitle" class="col-sm-2 control-label">Form Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="formTitle"  name="formTitle" placeholder="Form title" value="{{settings.formTitle}}">
+                        <p class="help-block">This title is shown at the form that users pick the date slot.</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="formDescription" class="col-sm-2 control-label">Form Description</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="formDescription" name="formDescription" rows="5" >{{settings.formDescription}}</textarea>
+                        <p class="help-block">This description text is shown at the form that users pick the date slot.</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail" class="col-sm-2 control-label">Contact Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="contactEmail" name="contactEmail" placeholder="Email" value="{{settings.contactEmail}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contactName" class="col-sm-2 control-label">Contact Fullname</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="contactName" name="contactName" placeholder="First and Last" value="{{settings.contactName}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pinCode" class="col-sm-2 control-label">Pin Code</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="pinCode" name="pinCode" placeholder="Any alphanumeric code" value="{{settings.pinCode}}">
+                        <p class="help-block">This code is given to the users for blocking random people using the site</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+{% endblock %}
+{% block script %}
+<script>
+$('#tableform').submit(function() {
+    var c = confirm("Are you sure to delete these? Click OK if yes.");
+    return c;
+});
+$('#emailsform').submit(function() {
+    var c = confirm("Are you sure to update emails? Click OK if yes.");
+    return c;
+});
+</script>
+{% endblock %}

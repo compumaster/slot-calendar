@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>{{ settings.formTitle }}</h2>
+<p>{{ settings.formDescription|nl2br }}</p>
+{% if flash['error'] %}
+    <div class="alert alert-danger" role="alert">{{ flash['error']|raw }}</div>
+{% endif %}
+<form action="{{urlFor('index.formsubmit')}}" method="post" id="dateform">
+    <div class="form-group">
+        <label for="email">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="First name and last name" value="{{ flash['refill.name'] }}"required>
+    </div>
+    <div class="form-group">
+        <label for="email">E-mail address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ flash['refill.email'] }}"required>
+    </div>
+    <div class="form-group">
+        <label for="pin">Pin code</label>
+        <input type="password" class="form-control" id="pin" name="pin" placeholder="Pin code I gave you" required>
+    </div>
+    <div class="form-group">
+        <label>Select a date</label>
+        <div>
+            <div class="btn-group-vertical" data-toggle="buttons">
+                {% for o in options %}
+                <label class="btn {% if o.capacity > 0 %}btn-info{% else %}btn-warning disabled{% endif %}">
+                <input type="radio" name="dates" value="{{ o.name }}" required> {{ o.name }}</input> (Seats left: {{ o.capacity }})
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+        $("#commentForm").validate();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>You've successfully picked a date.</h2>
+{% if flash['error'] %}
+<div class="alert alert-danger" role="alert">{{ flash['error'] }}</div>
+{% endif %}
+<p>You're done. Here is info you submitted:</p>
+<ul>
+    <li>Submitted date is: <span style="font-weight: bold;">{{ flash['refill.pickedDate'] }}</span>.</li>
+    <li>Submitted name is: {{ flash['refill.name'] }}</li>
+    <li>Submitted email address is: {{ flash['refill.email'] }}</li>
+</ul>
+<p>If any of them is incorrect please contact <a href="mailto:kussakli@stanford.edu">Kerem</a>.</p>
+{% endblock %}
