@@ -4,10 +4,10 @@ session_cache_limiter(false);
 session_start();
 
 DEFINE("DOMAINTENANCE", 0);
-DEFINE("HOSTNAME_DBCONN", "localhost");
-DEFINE("DATABASE_DBCONN", "kerem");
-DEFINE("USERNAME_DBCONN", "root");
-DEFINE("PASSWORD_DBCONN", "");
+DEFINE("HOSTNAME_DBCONN", "serverName");
+DEFINE("DATABASE_DBCONN", "databaseName");
+DEFINE("USERNAME_DBCONN", "databaseUser");
+DEFINE("PASSWORD_DBCONN", "databasePassword");
 DEFINE("ADMIN_ACCOUNT_PASSWORD", "verysecurepassword");
 
 $app = new \Slim\Slim(array(
