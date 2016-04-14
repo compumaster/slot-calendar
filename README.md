@@ -23,9 +23,20 @@ You can practically change any part of the UI from this form.
 
 ![Screenshot](readme/screenshot-5.PNG?raw=true "Screenshot 5")
 
+# Initial Configuration and requirements #
+PHP, MySQL
+
+You need to create a database in MySQL and the app will create it's tables at the initial run.
+
 `DEFINE("DOMAINTENANCE", 0);`
+
 `DEFINE("HOSTNAME_DBCONN", "localhost");`
+
 `DEFINE("DATABASE_DBCONN", "databaseName");`
+
 `DEFINE("USERNAME_DBCONN", "databaseUserName");`
+
 `DEFINE("PASSWORD_DBCONN", "databasePassword");`
+
 `DEFINE("ADMIN_ACCOUNT_PASSWORD", "verysecurepassword");`
+
