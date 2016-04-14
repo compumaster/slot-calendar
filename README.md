@@ -1,3 +1,12 @@
+# Slot Calendar, Resource reservation #
+
+The aim of this web app is to create a page that shows resources and allows users to reserve one resource for them. 
+
+Examples: 
+- office hours
+- any kind of limited day reservation system (showing everyday would be too much for the aim of this app)
+- presentations certain days, only 3 people can present per day
+
 Users are greeted with this page:
 
 They enter their email address (that's how the system matches them) and their name, and the pin code so random people can't play with this.
